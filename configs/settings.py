@@ -22,7 +22,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -31,7 +30,7 @@ INSTALLED_APPS = (
 
     'rest_framework',
 
-    'dicom',
+    'sil_dicom',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -71,7 +70,7 @@ WSGI_APPLICATION = 'configs.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'dicom',
+        'NAME': 'dicomWeb',
         'USER': 'glar',
         'PASSWORD': 'glar',
         'HOST': 'localhost',

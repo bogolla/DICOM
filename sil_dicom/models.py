@@ -10,8 +10,12 @@ class Document(models.Model):
     """
     data = models.FileField(upload_to='documents')
     title = models.CharField(max_length=255)
-    upload_date = models.DateTimeField(default=timezone.now)
+    upload_date = models.DateTimeField(editable=False)
     size = models.IntegerField(help_text='The size of the attachment in bytes')
+
+    def save(self, *args, **kwargs):
+        self.upload_date = timezone.now()
+        return super(Document, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.title

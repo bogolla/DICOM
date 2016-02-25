@@ -2,7 +2,7 @@
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-# import dj_database_url
+import dj_database_url
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -31,7 +31,7 @@ INSTALLED_APPS = (
 
     'rest_framework',
 
-    'dicom_api',
+    'dicom',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -80,8 +80,8 @@ DATABASES = {
 }
 
 # # Update database configuration with $DATABASE_URL.
-# db_from_env = dj_database_url.config(conn_max_age=500)
-# DATABASES['default'].update(db_from_env)
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
 
 # django-rest framework configs
 REST_FRAMEWORK = {

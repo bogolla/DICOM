@@ -8,10 +8,10 @@ class Document(models.Model):
 
     Attachments include images(png, jpeg) and documents(pdf, excel, word)
     """
-    data = models.FileField(upload_to='documents')
     title = models.CharField(max_length=255)
+    data = models.FileField(upload_to='documents')
     upload_date = models.DateTimeField(editable=False)
-    size = models.IntegerField(help_text='The size of the attachment in bytes')
+    size = models.IntegerField(editable=False, null=True, blank=True)
 
     def save(self, *args, **kwargs):
         self.upload_date = timezone.now()

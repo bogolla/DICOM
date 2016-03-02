@@ -1,9 +1,14 @@
-from rest_framework import routers
+from django.conf.urls import patterns, url, include
 from .views import (
-    DocumentViewSet
+    DocumentView
 )
 
-router = routers.SimpleRouter()
-router.register(r'images', DocumentViewSet)
-
-urlpatterns = router.urls
+# template_name = {'template_name': 'rest_framework_docs/docs.html'}
+urlpatterns = patterns(
+    '',
+    url(r'^capabilities/', include('rest_framework_docs.urls')),
+    url(r'^studies/$',
+        DocumentView.as_view(), name='studies'),
+    url(r'^studies/(?P<pk>[^/]+)/$',
+        DocumentView.as_view(), name='studies_details')
+)

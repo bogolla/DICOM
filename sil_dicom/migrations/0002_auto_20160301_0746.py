@@ -13,12 +13,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterField(
             model_name='document',
-            name='size',
-            field=models.IntegerField(null=True, editable=False, blank=True),
-        ),
-        migrations.AlterField(
-            model_name='document',
-            name='upload_date',
-            field=models.DateTimeField(editable=False),
+            name='image_size',
+            field=models.CharField(max_length=255, editable=False),
         ),
     ]

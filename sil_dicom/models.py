@@ -57,18 +57,23 @@ class Document(models.Model):
             raise DicomParsingException(str(self.data))
 
         # use dicom attributes to populate model fields
-        self.patient_name = dicom_obj.PatientName
-        self.patient_id = dicom_obj.PatientID
-        self.patient_age = dicom_obj.PatientAge
+        self.patient_name = str(getattr(dicom_obj, 'PatientName', 'Unknown'))
+        self.patient_id = str(getattr(dicom_obj, 'PatientID', 'Unknown'))
+        self.patient_age = str(getattr(dicom_obj, 'PatientAge', 'Unknown'))
         self.study_date = datetime.strptime(
             dicom_obj.StudyDate, "%Y%m%d").date()
         self.image_size = len(dicom_obj.PixelData)
-        self.body_part_examined = dicom_obj.BodyPartExamined
-        self.study_description = dicom_obj.StudyDescription
-        self.study_id = dicom_obj.StudyID
-        self.study_instance_uid = dicom_obj.StudyInstanceUID
-        self.series_number = dicom_obj.SeriesNumber
-        self.series_instance_uid = dicom_obj.SeriesInstanceUID
+        self.body_part_examined = str(
+            getattr(dicom_obj, 'BodyPartExamined', 'Unknown'))
+        self.study_description = str(
+            getattr(dicom_obj, 'StudyDescription', 'Unknown'))
+        self.study_id = str(getattr(dicom_obj, 'StudyID', 'Unknown'))
+        self.study_instance_uid = str(
+            getattr(dicom_obj, 'StudyInstanceUID', 'Unknown'))
+        self.series_number = str(
+            getattr(dicom_obj, 'SeriesNumber', 'Unknown'))
+        self.series_instance_uid = str(
+            getattr(dicom_obj, 'SeriesInstanceUID', 'Unknown'))
         self.upload_date = timezone.now()
 
         # purge duplicate images from disc

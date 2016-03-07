@@ -100,11 +100,13 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.JSONParser',
         'rest_framework.parsers.FileUploadParser',
         'rest_framework.parsers.FormParser',
+        'rest_framework_xml.parsers.XMLParser',
     ),
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.BrowsableAPIRenderer',
         'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.AdminRenderer'
+        'rest_framework.renderers.AdminRenderer',
+        'rest_framework_xml.renderers.XMLRenderer',
     ),
     'DEFAULT_PAGINATION_CLASS':
         'rest_framework.pagination.PageNumberPagination',

@@ -11,19 +11,23 @@ from django.db import models
 from django.conf import settings
 
 
+CONTENT_TYPE = (
+    ("image/dcm", "DCM"),
+    ("image/png", "PNG"),
+    ("image/jpeg", "JPEG"),
+)
+
+
 class DicomParsingException(Exception):
     """ Thrown when a file is unable to be parsed by the dicom library. """
-    pass
-
-
-class DicomPILException(Exception):
-    """ Throwing if we're unable to convert a Dicom pixel array to PIL. """
     pass
 
 
 class Document(models.Model):
     """ A model representation of an attachment (dicom file). """
     title = models.CharField(max_length=255)
+    content_type = models.CharField(
+        max_length=100, choices=CONTENT_TYPE, default='DCM')
     data = models.FileField(upload_to='documents')
     upload_date = models.DateTimeField(editable=False)
 

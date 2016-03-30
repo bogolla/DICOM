@@ -1,8 +1,8 @@
 from rest_framework import serializers
-from .models import Document
+from rest_hooks.models import Hook
 
-# reload(sys)
-# sys.setdefaultencoding("utf-8")
+from .models import Document, UnifiedProcedureStep
+
 
 
 class DocumentSerializer(serializers.ModelSerializer):
@@ -115,3 +115,16 @@ class StudySeriesInstancesSerializer(DocumentSerializer):
         }
 
         return payload
+
+# --------------------------Unified Procedure Step--------------------------- #
+
+class HookSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Hook
+
+
+class UPSSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = UnifiedProcedureStep

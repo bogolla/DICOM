@@ -1,6 +1,8 @@
 from rest_framework import generics
 from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
+from rest_framework import viewsets
+from rest_hooks.models import Hook
 
 from .models import Document
 from .serializers import (
@@ -9,6 +11,8 @@ from .serializers import (
     StudySeriesSerializer,
     StudyInstancesSerializer,
     StudySeriesInstancesSerializer,
+
+    HookSerializer,
 )
 
 
@@ -173,3 +177,14 @@ class RetrieveStudySeriesInstanceView(generics.RetrieveAPIView):
             'series_instance_uid', val, base_obj), [instance_uid])
 
         return Response(distinct_obj)
+
+# --------------------------Unified Procedure Step--------------------------- #
+class HookViewSet(viewsets.ModelViewSet):
+    """
+    Retrieve, create, update or destroy webhooks.
+    """
+    model = Hook
+    serializer_class = HookSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)

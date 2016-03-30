@@ -31,6 +31,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'rest_framework_swagger',
     'rest_framework_docs',
+    'rest_hooks',
 
     'sil_dicom',
 )
@@ -134,6 +135,16 @@ SWAGGER_SETTINGS = {
                        'dicomweb.hcintegrations.ca</a> ',
         'title': 'DICOM WEB Sample',
     },
+}
+
+HOOK_EVENTS = {
+    'ups.added': 'DICOM.UnifiedProcedureStep.created',
+    'ups.changed': 'DICOM.UnifiedProcedureStep.updated',
+    'ups.removed': 'DICOM.UnifiedProcedureStep.deleted',
+
+    # Add the DICOM UPS Status configs here
+    # This requires creation of custom hooks for each status
+    'ups.created': 'DICOM.UnifiedProcedureStep.read'
 }
 
 

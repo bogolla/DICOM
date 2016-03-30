@@ -87,3 +87,45 @@ class Document(models.Model):
 
     def __str__(self):
         return self.title
+
+UPS_STATUS = (
+    ("created", "CREATED"),
+    ("progress", "IN PROGRESS"),
+    ("complete", "COMPLETE"),
+    ("pending", "PENDING"),
+    ("rejected", "REJECTED"),
+)
+
+
+class UnifiedProcedureStep(models.Model):
+    patient_name = models.CharField(max_length=128)
+    accession_number = models.CharField(max_length=128)
+    requested_procedure_id = models.CharField(max_length=128)
+    requested_procedure_desc = models.TextField()
+    scheduled_station_AE_title = models.CharField(max_length=128)
+    scheduled_ups_desc = models.TextField()
+    ups_status = models.CharField(
+        max_length=128, choices=CONTENT_TYPE, default='CREATED')
+
+    def serialize_hook(self, hook):
+        return {
+            'hook': hook.dict(),
+            'data': {
+                'id': self.id,
+                'patient_name': self.patient_name,
+                'accession_number': self.accession_number,
+                'requested_procedure_id': self.requested_procedure_id,
+                'requested_procedure_desc': self.requested_procedure_desc,
+                'scheduled_station_AE_title': self.scheduled_station_AE_title,
+                'scheduled_ups_desc': self.scheduled_ups_desc,
+                'ups_status': self.ups_status
+            }
+        }
+
+    def mark_as_created(self):
+        from rest_hooks.signals import hook_event
+        hook_event.send(
+            sender=self.__class__,
+            action='created',
+            instance=self # the Book object
+        )

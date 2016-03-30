@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, url
+from rest_framework import routers
 from .views import (
     DocumentView,
     StudiesListView,
@@ -11,11 +12,12 @@ from .views import (
     RetrieveStudyView,
     RetrieveStudySeriesView,
     RetrieveStudySeriesInstanceView,
+
+    HookViewSet,
 )
 
 # template_name = {'template_name': 'rest_framework_docs/docs.html'}
 urlpatterns = patterns(
-    '',
     # DICOM Web Querying Service endpoints
     url(r'^studies/$', StudiesListView.as_view(), name='studies'),
     url(r'^studies/(?P<study_id>[a-zA-Z0-9-]+)/series/$',
@@ -46,3 +48,8 @@ urlpatterns = patterns(
         '(?P<instance_uid>[a-zA-Z0-9-]+)/$',
         RetrieveStudySeriesInstanceView.as_view(), name='study_series_instances')
 )
+
+# router = routers.DefaultRouter()
+# router.register(r'webhooks', HookViewSet, 'webhook')
+
+# urlpatterns += router.urls
